@@ -19,6 +19,57 @@
         if mu is None or mu <= 0:
             raise ValueError("For Poisson distribution, 'mu' must be a positive number.")
         probabilities = [poisson_dist(mu, x) for x in vals]
+
+
+        def main():
+    while True:
+        print("\n--- Probability Distribution Calculator ---")
+        print("1. Geometric Distribution")
+        print("2. Binomial Distribution")
+        print("3. Poisson Distribution")
+        print("4. Uniform Distribution")
+        print("5. Exit")
+
+        choice = input("Enter your choice (1-5): ")
+
+        if choice == '5':
+            print("Exiting the program. Goodbye!")
+            break
+
+        try:
+            if choice == '1':
+                vals = list(map(float, input("Enter the values (space-separated): ").split()))
+                p = float(input("Enter the probability p (0 < p <= 1): "))
+                probabilities = get_probability_distribution("geometric", {"p": p}, vals)
+
+            elif choice == '2':
+                vals = list(map(float, input("Enter the values (space-separated): ").split()))
+                n = int(input("Enter the number of trials n (positive integer): "))
+                p = float(input("Enter the probability p (0 <= p <= 1): "))
+                probabilities = get_probability_distribution("binomial", {"n": n, "p": p}, vals)
+
+            elif choice == '3':
+                vals = list(map(float, input("Enter the values (space-separated): ").split()))
+                mu = float(input("Enter the mean mu (positive value): "))
+                probabilities = get_probability_distribution("poisson", {"mu": mu}, vals)
+
+            elif choice == '4':
+                vals = list(map(float, input("Enter the values (space-separated): ").split()))
+                a = float(input("Enter the lower bound a: "))
+                b = float(input("Enter the upper bound b (b > a): "))
+                probabilities = get_probability_distribution("uniform", {"a": a, "b": b}, vals)
+                
+            else:
+                print("Invalid choice. Please select a valid option.")
+
+        except ValueError as e:
+            print(f"Error: {e}")
+        except Exception as e:
+            print(f"Unexpected error: {e}")
+
+if __name__ == "__main__":
+    main()
+
     elif dist_name == "uniform":
         a = params.get("a")
         b = params.get("b")
